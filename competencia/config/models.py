@@ -32,6 +32,9 @@ class Competencia(models.Model):
     fecha = models.DateField()
     estatus = models.BooleanField()
 
+    def __str__(self):
+        return str(self.fecha)
+
     class Meta:
         managed = True
         db_table = 'competencia'
@@ -46,6 +49,9 @@ class Competidor(models.Model):
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
     grupo = models.ForeignKey('Grupo', models.DO_NOTHING, blank=True, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nombre + " " + self.apellidos
 
     class Meta:
         managed = True
