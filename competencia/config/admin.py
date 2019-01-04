@@ -28,10 +28,10 @@ class CatalogoAdmin(admin.ModelAdmin):
 
 class CompetenciaAdmin(admin.ModelAdmin):
     actions = ['custom_delete']
-    fields = ('fecha', 'estatus')
-    list_display = ('fecha', 'estatus')
+    fields = ('nombre', 'fecha', 'estatus')
+    list_display = ('nombre', 'fecha', 'estatus')
     empty_value_display = '-Vacio-'
-    search_fields = ['fecha', ]
+    search_fields = ('nombre', 'fecha',)
 
     def custom_delete(self, request, queryset):
         queryset.update(estatus=False)
