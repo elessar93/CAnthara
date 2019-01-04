@@ -44,7 +44,7 @@ class Competidor(models.Model):
     gimnasio = models.ForeignKey('Gimnasio', models.DO_NOTHING)
     edad = models.IntegerField()
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
-    grupo = models.ForeignKey('Grupo', models.DO_NOTHING)
+    grupo = models.ForeignKey('Grupo', models.DO_NOTHING, blank=True, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
 
     class Meta:
