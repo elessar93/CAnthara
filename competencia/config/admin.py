@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import admin
 
-from config.models import Aparato, Gimnasio, Nivel, Competencia, Competidor, Grupo, Calificacion
+from config.models import Aparato, Gimnasio, Nivel, Competencia, Competidor, Grupo, Calificacion, Genero
 
 
 class CatalogoAdmin(admin.ModelAdmin):
@@ -94,3 +94,4 @@ admin.site.register(Competencia, CompetenciaAdmin)
 admin.site.register(Competidor, CompetidorAdmin)
 admin.site.register(Grupo, GrupoAdmin)
 admin.site.register(Calificacion, CalificacionAdmin)
+admin.site.register(Genero)
