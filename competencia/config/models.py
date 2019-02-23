@@ -56,7 +56,7 @@ class Competidor(models.Model):
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
     grupo = models.ForeignKey('Grupo', models.DO_NOTHING, blank=True, null=True)
     fecha_registro = models.DateTimeField(auto_now_add=True)
-    genero = models.ForeignKey('Genero', models.DO_NOTHING, default=1)
+    genero = models.ForeignKey('Genero', models.DO_NOTHING)
 
     def __str__(self):
         return self.nombre + " " + self.apellidos
