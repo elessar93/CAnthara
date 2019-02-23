@@ -3,6 +3,9 @@
 {% block titulo_tabla %}
     <h5 class="black-text">Competidores por asignar: {{ c.nombre }}</h5>
 {% endblock %}
+{% block boton %}
+    <button id="agregar" class="btn btn-primary btn-block" data-toggle="modal" data-target="#cambiaModal">Agregar al grupo</button>
+{% endblock %}
 {% load static %}
 {% block campos %}
     <th>Id</th>
@@ -13,8 +16,72 @@
     <th>Edad</th>
     <th>Genero</th>
 {% endblock %}
+{% block modals %}
+    <div class="modal fade" id="cambiaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar <span id="cant"></span> competidor(es) al grupo:</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select id="grupos" class="form-control">
+                        {% for g in c.grupo_set.all %}
+                            <option value="{{ g.pk }}">{{ g.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <button id="agrega_grupo" class="btn btn-primary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block scripts_tabla %}
+    $(document).ready(function () {
+        $('#agregar').click(function(event){
+            $('#cant').html($('.chk-competidor:checked').length);
+        });
+        $('#agrega_grupo').click(function(event){
+            var str = "";
+            $('.chk-competidor:checked').each(function( index, value ) {
+                str = str + value.getAttribute('data-id') +",";
+            });
+            if(str!=""){
+                str = str.substr(0, str.length - 1);
+            }
+            $.ajax({
+                url : "{% url 'webapp:agregar_a_grupo' %}",
+                type : "POST", // http method
+                data : {  competidores : str,grupo:$("#grupos").val() },
+                // handle a successful response
+                success : function(json) {
+                    if(json.result ==1){
+                      tabla.ajax.reload();
+                      $("#cambiaModal").modal('toggle');
+                    }
+                    else{
+                      alert("Ocurrio un problema al agregar al grupo")
+                    }
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    alert("Ocurrio un error al agregar al grupo");
+                }
+            });
+
+        });
+
+    });
+
+
 
 {% endblock %}
 

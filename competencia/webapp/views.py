@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 # Create your views here.
 from django.urls import reverse
@@ -59,7 +61,7 @@ class PorAsignarAjaxList(LoginRequiredMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'id':
-            return str(row.pk)
+            return "<input type='checkbox' class='chk-competidor' data-id='" + str(row.pk) + "' />"
         return super(PorAsignarAjaxList, self).render_column(row, column)
 
     def get_initial_queryset(self):
@@ -82,3 +84,20 @@ class GrupoAjaxList(LoginRequiredMixin, BaseDatatableView):
 
     def get_initial_queryset(self):
         return Competidor.objects.filter(grupo__pk=self.kwargs['pk'])
+
+
+@login_required(redirect_field_name='next', login_url='/webapp/login/')
+def agregar_a_grupo(request):
+    competidores = request.POST.get('competidores')
+    grupo = request.POST.get('grupo')
+    array = []
+    for c in competidores.split(','):
+        array.append(int(c))
+    c = Competidor.objects.filter(pk__in=array)
+    g = Grupo.objects.filter(pk=grupo)
+    if g.exists():
+        g = g.first()
+    else:
+        return JsonResponse({'result': 0, "error": "El grupo no existe"})
+    c.update(grupo=g)
+    return JsonResponse({'result': 1})
