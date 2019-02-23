@@ -48,13 +48,13 @@ class CompetidorAdmin(admin.ModelAdmin):
     fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'genero')
     list_display = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro', 'genero')
     empty_value_display = '-Vacio-'
-    search_fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro', 'genero')
+    search_fields = ('nombre', 'apellidos', 'nivel__nombre', 'gimnasio__nombre', 'edad', 'competencia__nombre', 'fecha_registro', 'genero__nombre')
 
 
 class GrupoForm(forms.ModelForm):
     class Meta:
         model = Grupo
-        fields = ('competencia', 'aparato')
+        fields = ('competencia', 'aparato','nombre')
 
     competidors = forms.ModelMultipleChoiceField(queryset=Competidor.objects.filter(competencia__estatus=True))
 
@@ -64,11 +64,7 @@ class GrupoForm(forms.ModelForm):
             self.fields['competidors'].initial = self.instance.competidor_set.all()
 
     def save(self, *args, **kwargs):
-        # FIXME: 'commit' argument is not handled
-        # TODO: Wrap reassignments into transaction
-        # NOTE: Previously assigned Foos are silently reset
-        instance = super(GrupoForm, self).save(commit=False)
-        self.fields['competidors'].initial.update(grupo=None)
+        instance = super(GrupoForm, self).save()
         self.cleaned_data['competidors'].update(grupo=instance)
         return instance
 

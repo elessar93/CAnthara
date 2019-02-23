@@ -80,6 +80,7 @@ class Gimnasio(Catalogo):
 
 
 class Grupo(models.Model):
+    nombre = models.CharField(max_length=128, null=True)
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
     aparato = models.ForeignKey('Aparato', models.DO_NOTHING, blank=True, null=True)
 
