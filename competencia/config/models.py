@@ -57,7 +57,7 @@ class Genero(Catalogo):
 class Competidor(models.Model):
     nombre = models.CharField(max_length=128)
     apellidos = models.CharField(max_length=128)
-    #nivel = models.ForeignKey('Nivel', models.DO_NOTHING)
+    nivel = models.ForeignKey('Nivel', models.DO_NOTHING, null=True)
     gimnasio = models.ForeignKey('Gimnasio', models.DO_NOTHING)
     edad = models.IntegerField()
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
