@@ -45,10 +45,10 @@ class CompetenciaAdmin(admin.ModelAdmin):
 
 
 class CompetidorAdmin(admin.ModelAdmin):
-    fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia')
-    list_display = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro')
+    fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'genero')
+    list_display = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro', 'genero')
     empty_value_display = '-Vacio-'
-    search_fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro')
+    search_fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro', 'genero')
 
 
 class GrupoForm(forms.ModelForm):
