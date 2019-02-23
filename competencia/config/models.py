@@ -59,6 +59,12 @@ class Competidor(models.Model):
         db_table = 'competidor'
 
 
+class Genero(Catalogo):
+    class Meta:
+        managed = True
+        db_table = 'genero'
+
+
 class Gimnasio(Catalogo):
     class Meta:
         managed = True
