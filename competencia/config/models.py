@@ -84,6 +84,10 @@ class Grupo(models.Model):
     competencia = models.ForeignKey('Competencia', models.DO_NOTHING)
     aparato = models.ForeignKey('Aparato', models.DO_NOTHING, blank=True, null=True)
 
+    class Meta:
+        managed = True
+        db_table = 'grupo'
+
 
 class Nivel(Catalogo):
     class Meta:

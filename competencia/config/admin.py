@@ -48,13 +48,14 @@ class CompetidorAdmin(admin.ModelAdmin):
     fields = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'genero')
     list_display = ('nombre', 'apellidos', 'nivel', 'gimnasio', 'edad', 'competencia', 'fecha_registro', 'genero')
     empty_value_display = '-Vacio-'
-    search_fields = ('nombre', 'apellidos', 'nivel__nombre', 'gimnasio__nombre', 'edad', 'competencia__nombre', 'fecha_registro', 'genero__nombre')
+    search_fields = (
+        'nombre', 'apellidos', 'nivel__nombre', 'gimnasio__nombre', 'edad', 'competencia__nombre', 'genero__nombre')
 
 
 class GrupoForm(forms.ModelForm):
     class Meta:
         model = Grupo
-        fields = ('competencia', 'aparato','nombre')
+        fields = ('competencia', 'aparato', 'nombre')
 
     competidors = forms.ModelMultipleChoiceField(queryset=Competidor.objects.filter(competencia__estatus=True))
 
@@ -63,17 +64,20 @@ class GrupoForm(forms.ModelForm):
         if self.instance:
             self.fields['competidors'].initial = self.instance.competidor_set.all()
 
-    def save(self, *args, **kwargs):
+    def save(self,*args, **kwargs):
         instance = super(GrupoForm, self).save()
         self.cleaned_data['competidors'].update(grupo=instance)
         return instance
 
+    def save_m2m(self, *args, **kwargs):
+        return
+
 
 class GrupoAdmin(admin.ModelAdmin):
     form = GrupoForm
-    list_display = ['competencia', 'aparato', ]
-    empty_value_display = ['competencia', 'aparato', ]
-    search_fields = ['competencia', 'aparato', ]
+    list_display = ['nombre', 'competencia', 'aparato']
+    empty_value_display = '-Vacio-'
+    search_fields = ['competencia__nombre', 'aparato__nombre', 'nombre']
 
 
 class CalificacionAdmin(admin.ModelAdmin):
