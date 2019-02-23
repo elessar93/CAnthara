@@ -55,29 +55,14 @@ class CompetidorAdmin(admin.ModelAdmin):
 class GrupoForm(forms.ModelForm):
     class Meta:
         model = Grupo
-        fields = ('competencia', 'aparato', 'nombre')
-
-    competidors = forms.ModelMultipleChoiceField(queryset=Competidor.objects.filter(competencia__estatus=True))
-
-    def __init__(self, *args, **kwargs):
-        super(GrupoForm, self).__init__(*args, **kwargs)
-        if self.instance:
-            self.fields['competidors'].initial = self.instance.competidor_set.all()
-
-    def save(self,*args, **kwargs):
-        instance = super(GrupoForm, self).save()
-        self.cleaned_data['competidors'].update(grupo=instance)
-        return instance
-
-    def save_m2m(self, *args, **kwargs):
-        return
+        fields = ('competencia', 'nombre')
 
 
 class GrupoAdmin(admin.ModelAdmin):
     form = GrupoForm
-    list_display = ['nombre', 'competencia', 'aparato']
+    list_display = ['nombre', 'competencia']
     empty_value_display = '-Vacio-'
-    search_fields = ['competencia__nombre', 'aparato__nombre', 'nombre']
+    search_fields = ['competencia__nombre', 'nombre']
 
 
 class CalificacionAdmin(admin.ModelAdmin):
