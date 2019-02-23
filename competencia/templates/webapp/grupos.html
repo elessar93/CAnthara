@@ -21,7 +21,7 @@
                         <div class="mr-5">{{ g.nombre }}</div>
                     </div>
                     <a class="card-footer text-white clearfix small z-1" href="{% url 'webapp:grupo' g.pk %}">
-                        <span class="float-left">View Details</span>
+                        <span class="float-left">View Details({{ g.competidor_set.count }})</span>
                         <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -38,7 +38,7 @@
                     <div class="mr-5">Sin asignar</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="{% url 'webapp:por_asignar' c.pk %}">
-                    <span class="float-left">View Details</span>
+                    <span class="float-left">View Details({{ sin }})</span>
                     <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>

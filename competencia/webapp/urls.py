@@ -13,6 +13,7 @@ urlpatterns = [
     path('grupo/list/<int:pk>/', views.grupo_list, name='grupo'),
     path('grupo/ajax/list/<int:pk>/', GrupoAjaxList.as_view(), name='grupo_list'),
     path('sin_asignar/ajax/list/<int:pk>/', PorAsignarAjaxList.as_view(), name='por_asignar_list'),
-    path('agregar_a_grupo/', views.agregar_a_grupo, name='agregar_a_grupo')
+    path('agregar_a_grupo/', views.agregar_a_grupo, name='agregar_a_grupo'),
+    path('sacar_grupo/', views.sacar_grupo, name='sacar_grupo'),
 
 ]

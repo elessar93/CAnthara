@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
     <div class="card mb-3">
+        <div class="card-header" align="right"><a href="{% block atras %}{% endblock %}">&lt;&lt;Regresar</a></div>
         <div class="card-header">
             <div class="row">
                 <div class="col-10">
@@ -25,7 +26,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block scripts %}

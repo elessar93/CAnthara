@@ -1,12 +1,14 @@
-<!--   SOFTIC SOLUTIONS   -->
 {% extends "config/tab_base.html" %}
+{% load static %}
+{% block atras %}
+    {% url 'webapp:grupos' c.pk %}
+{% endblock %}
 {% block titulo_tabla %}
     <h5 class="black-text">Competidores por asignar: {{ c.nombre }}</h5>
 {% endblock %}
 {% block boton %}
     <button id="agregar" class="btn btn-primary btn-block" data-toggle="modal" data-target="#cambiaModal">Agregar al grupo</button>
 {% endblock %}
-{% load static %}
 {% block campos %}
     <th>Id</th>
     <th>Nombre</th>

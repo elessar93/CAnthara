@@ -1,9 +1,15 @@
-<!--   SOFTIC SOLUTIONS   -->
 {% extends "config/tab_base.html" %}
+{% load static %}
+{% block atras %}
+    {% url 'webapp:grupos' g.competencia.pk %}
+{% endblock %}
 {% block titulo_tabla %}
     <h5 class="black-text">{{ g.nombre }}</h5>
 {% endblock %}
-{% load static %}
+{% block boton %}
+    <button id="quitar" class="btn btn-primary btn-block">Quitar del grupo</button>
+{% endblock %}
+
 {% block campos %}
     <th>Id</th>
     <th>Nombre</th>
@@ -15,7 +21,38 @@
 {% endblock %}
 
 {% block scripts_tabla %}
+    $(document).ready(function () {
 
+        $('#quitar').click(function(event){
+            var str = "";
+            $('.chk-competidor:checked').each(function( index, value ) {
+                str = str + value.getAttribute('data-id') +",";
+            });
+            if(str!=""){
+                str = str.substr(0, str.length - 1);
+            }
+            $.ajax({
+                url : "{% url 'webapp:sacar_grupo' %}",
+                type : "POST", // http method
+                data : {  competidores : str},
+                // handle a successful response
+                success : function(json) {
+                    if(json.result ==1){
+                      tabla.ajax.reload();
+                    }
+                    else{
+                      alert("Ocurrio un problema al sacar del grupo");
+                    }
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    alert("Ocurrio un problema al sacar del grupo");
+                }
+            });
+        });
+
+    });
 {% endblock %}
 
 {% block url_ajax %}{% url 'webapp:grupo_list' g.pk %}{% endblock %}

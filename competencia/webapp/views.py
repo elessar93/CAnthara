@@ -23,8 +23,9 @@ def por_asignar(request, pk):
 
 def grupos(request, pk):
     c = get_object_or_404(Competencia, pk=pk)
+    sin_grupo = Competidor.objects.filter(competencia=c,grupo__isnull=True).count()
     template_name = 'webapp/grupos.html'
-    return render(request, template_name, {"c": c})
+    return render(request, template_name, {"c": c,"sin":sin_grupo})
 
 
 def grupo_list(request, pk):
@@ -79,7 +80,7 @@ class GrupoAjaxList(LoginRequiredMixin, BaseDatatableView):
 
     def render_column(self, row, column):
         if column == 'id':
-            return str(row.pk)
+            return "<input type='checkbox' class='chk-competidor' data-id='" + str(row.pk) + "' />"
         return super(GrupoAjaxList, self).render_column(row, column)
 
     def get_initial_queryset(self):
@@ -100,4 +101,15 @@ def agregar_a_grupo(request):
     else:
         return JsonResponse({'result': 0, "error": "El grupo no existe"})
     c.update(grupo=g)
+    return JsonResponse({'result': 1})
+
+
+@login_required(redirect_field_name='next', login_url='/webapp/login/')
+def sacar_grupo(request):
+    competidores = request.POST.get('competidores')
+    array = []
+    for c in competidores.split(','):
+        array.append(int(c))
+    c = Competidor.objects.filter(pk__in=array)
+    c.update(grupo=None)
     return JsonResponse({'result': 1})
