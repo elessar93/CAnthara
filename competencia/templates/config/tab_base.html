@@ -1,0 +1,64 @@
+{% extends 'config/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            {% block titulo_tabla %}{% endblock %}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tabla" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        {% block campos %}{% endblock %}
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+    <script src="{% static 'js/crsfajax.js' %}"></script>
+    <script type="text/javascript">
+
+        var id = 0;
+
+        function actualiza(uid) {
+            id = uid;
+            $('.modal').modal({
+                    dismissible: false
+                }
+            );
+            $('#modal1').modal('open');
+        }
+
+
+        {% block scripts_tabla %}
+        {% endblock %}
+
+        $(document).ready(function () {
+            tabla = $('#tabla').DataTable({
+                language: {
+                    url: "{% static 'datatables/spanish.json' %}"
+                },
+                processing: true,
+                serverSide: true,
+                ajax: "{% block url_ajax %}{% endblock %}",
+                {% block order_table %} {% endblock %}
+            });
+
+            $("#buscar").on('keyup', function () {
+                $('#usuarios').dataTable().fnFilter(this.value);
+            });
+
+
+        });
+
+    </script>
+{% endblock %}
+

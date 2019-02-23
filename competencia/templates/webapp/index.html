@@ -1,0 +1,25 @@
+<!--   SOFTIC SOLUTIONS   -->
+{% extends "config/tab_base.html" %}
+{% block style %}
+    <!--  <style>
+      #tabla_wrapper {
+      margin-left: -10% !important;
+  }
+      </style>-->
+{% endblock %}
+{% block titulo_tabla %}
+    <h5 class="black-text">Competencias</h5>
+{% endblock %}
+{% load static %}
+{% block campos %}
+    <th>Id</th>
+    <th>Nombre</th>
+{% endblock %}
+
+{% block scripts_tabla %}
+
+{% endblock %}
+
+{% block url_ajax %}{% url 'webapp:competencias_list' %}{% endblock %}
+{% block order_table %} "order": [ 0, "desc" ] {% endblock %}
+

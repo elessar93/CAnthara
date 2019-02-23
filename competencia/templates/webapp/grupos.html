@@ -1,0 +1,49 @@
+{% extends 'config/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">{{ c.nombre }}</a>
+        </li>
+        <li class="breadcrumb-item active">Grupos</li>
+    </ol>
+
+    <!-- Icon Cards-->
+    <div class="row">
+        {% for g in c.grupo_set.all %}
+            <div class="col-xl-3 col-sm-6 mb-3">
+                <div class="card text-white bg-primary o-hidden h-100">
+                    <div class="card-body">
+                        <div class="card-body-icon">
+                            <i class="fas fa-fw fa-life-ring"></i>
+                        </div>
+                        <div class="mr-5">{{ g.nombre }}</div>
+                    </div>
+                    <a class="card-footer text-white clearfix small z-1" href="{% url 'webapp:grupo' g.pk %}">
+                        <span class="float-left">View Details</span>
+                        <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-warning o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fas fa-fw fa-life-ring"></i>
+                    </div>
+                    <div class="mr-5">Sin asignar</div>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="{% url 'webapp:por_asignar' c.pk %}">
+                    <span class="float-left">View Details</span>
+                    <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

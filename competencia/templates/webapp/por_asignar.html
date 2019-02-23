@@ -1,0 +1,23 @@
+<!--   SOFTIC SOLUTIONS   -->
+{% extends "config/tab_base.html" %}
+{% block titulo_tabla %}
+    <h5 class="black-text">Competidores por asignar: {{ c.nombre }}</h5>
+{% endblock %}
+{% load static %}
+{% block campos %}
+    <th>Id</th>
+    <th>Nombre</th>
+    <th>Apellidos</th>
+    <th>Nivel</th>
+    <th>Gimnasio</th>
+    <th>Edad</th>
+    <th>Genero</th>
+{% endblock %}
+
+{% block scripts_tabla %}
+
+{% endblock %}
+
+{% block url_ajax %}{% url 'webapp:por_asignar_list' c.pk %}{% endblock %}
+{% block order_table %} "order": [ 4, "desc" ] {% endblock %}
+
