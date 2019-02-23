@@ -1,9 +1,16 @@
 from django.db import models
 
 
+class CatalogoManager(models.Manager):
+    def all(self):
+        return super().all().filter(estatus=True)
+
+
 class Catalogo(models.Model):
     nombre = models.CharField(max_length=64)
     estatus = models.BooleanField(default=True)
+
+    objects = CatalogoManager()
 
     def __str__(self):
         return self.nombre
